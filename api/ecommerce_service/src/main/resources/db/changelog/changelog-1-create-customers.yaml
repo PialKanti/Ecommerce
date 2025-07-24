@@ -1,0 +1,39 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1
+      author: Pial Kanti Samadder
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            tableExists:
+              tableName: customers
+
+      changes:
+        - createTable:
+            tableName: customers
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+                    unique: true
+
+              - column:
+                  name: firstname
+                  type: VARCHAR(25)
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: lastname
+                  type: VARCHAR(25)
+
+              - column:
+                  name: is_active
+                  type: BOOLEAN
+                  defaultValueBoolean: true
+                  constraints:
+                    nullable: false
