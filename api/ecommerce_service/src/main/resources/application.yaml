@@ -1,0 +1,7 @@
+spring:
+  application:
+    name: ecommerce_service
+
+  profiles:
+    active: dev
+
