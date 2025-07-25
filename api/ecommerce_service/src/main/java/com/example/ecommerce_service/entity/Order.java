@@ -17,12 +17,12 @@ import java.time.LocalDate;
 @NoArgsConstructor
 public class Order extends BaseEntity {
     @ManyToOne
-    @JoinColumn(name = "customer_id")
+    @JoinColumn(name = "customer_id", nullable = false)
     private Customer customer;
 
-    @Column(name = "order_date")
+    @Column(name = "order_date", nullable = false)
     private LocalDate orderDate;
 
-    @Column(name = "total_amount")
+    @Column(name = "total_amount", nullable = false)
     private Double totalAmount;
 }

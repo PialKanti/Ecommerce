@@ -4,10 +4,7 @@ import com.example.ecommerce_service.entity.common.BaseEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Entity
 @Table(name = "products")
@@ -15,9 +12,12 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class Product extends BaseEntity {
+    @Column(name = "name", length = 50, nullable = false)
     private String name;
+    @Column(name = "description", length = 1000)
     private String description;
-    @Column(name = "is_active")
+    @Column(name = "is_active", nullable = false)
     private boolean isActive;
 }

@@ -15,15 +15,16 @@ import lombok.Setter;
 @NoArgsConstructor
 public class OrderItem extends BaseEntity {
     @ManyToOne
-    @JoinColumn(name = "order_id")
+    @JoinColumn(name = "order_id", nullable = false)
     private Order order;
 
     @ManyToOne
-    @JoinColumn(name = "product_id")
+    @JoinColumn(name = "product_id", nullable = false)
     private Product product;
 
+    @Column(name = "quantity", nullable = false)
     private Integer quantity;
 
-    @Column(name = "unit_price")
+    @Column(name = "unit_price", nullable = false)
     private Double unitPrice;
 }
