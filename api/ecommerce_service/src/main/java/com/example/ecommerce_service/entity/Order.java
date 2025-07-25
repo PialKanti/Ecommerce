@@ -2,10 +2,7 @@ package com.example.ecommerce_service.entity;
 
 import com.example.ecommerce_service.entity.common.BaseEntity;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDate;
 
@@ -15,6 +12,7 @@ import java.time.LocalDate;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class Order extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = "customer_id", nullable = false)
