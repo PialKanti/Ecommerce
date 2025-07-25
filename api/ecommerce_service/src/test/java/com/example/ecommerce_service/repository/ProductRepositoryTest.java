@@ -4,7 +4,9 @@ import com.example.ecommerce_service.entity.Customer;
 import com.example.ecommerce_service.entity.Order;
 import com.example.ecommerce_service.entity.OrderItem;
 import com.example.ecommerce_service.entity.Product;
+import com.example.ecommerce_service.projection.ProductProjection;
 import com.example.ecommerce_service.projection.TopAmountProductProjection;
+import com.example.ecommerce_service.projection.TopCountProductProjection;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -15,6 +17,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
 import java.time.LocalDate;
+import java.time.YearMonth;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -33,10 +36,10 @@ public class ProductRepositoryTest {
     private OrderRepository orderRepository;
 
     private Product topSellingProductBySalesAmount;
+    private Product topSellingProductBySalesNumber;
 
     @BeforeEach
     void setupTestData() {
-        LocalDate today = LocalDate.now();
         Customer testCustomer = createTestCustomer();
 
         Product shirt = createTestProduct("Shirt", "Shirt description");
@@ -44,20 +47,23 @@ public class ProductRepositoryTest {
         Product sock = createTestProduct("Sock", "Sock description");
 
         topSellingProductBySalesAmount = pant;
+        topSellingProductBySalesNumber = shirt;
 
-        Order shirtOrder = createTestOrder(today, 1500.0, testCustomer);
+        YearMonth previousMonth = getPreviousMonth();
+
+        Order shirtOrder = createTestOrder(LocalDate.of(2025, previousMonth.getMonthValue(), 2), 1500.0, testCustomer);
         createTestOrderItem(shirtOrder, shirt, 3, 500.0);
 
-        Order pantOrder = createTestOrder(today, 2000.0, testCustomer);
+        Order pantOrder = createTestOrder(LocalDate.of(2025, previousMonth.getMonthValue(), 10), 2000.0, testCustomer);
         createTestOrderItem(pantOrder, pant, 2, 1000.0);
 
-        Order sockOrder = createTestOrder(today, 200.0, testCustomer);
+        Order sockOrder = createTestOrder(LocalDate.of(2025, previousMonth.getMonthValue(), 20), 200.0, testCustomer);
         createTestOrderItem(sockOrder, sock, 2, 100.0);
     }
 
     @Test
-    @DisplayName("Returns top selling products by sales amount")
-    void testFindTopSellingProductsBySalesAmount(){
+    @DisplayName("Returns all time top selling products by sales amount")
+    void testFindTopSellingProductsBySalesAmount() {
         Pageable pageable = PageRequest.of(0, 5);
 
         Page<TopAmountProductProjection> response = productRepository.findTopSellingProductsBySalesAmount(pageable);
@@ -67,11 +73,30 @@ public class ProductRepositoryTest {
         assertProductMatches(response.getContent().getFirst(), topSellingProductBySalesAmount);
     }
 
-    private void assertProductMatches(TopAmountProductProjection actual, Product expected) {
+    @Test
+    @DisplayName("Returns last month top selling products by sales number")
+    void testFindTopSellingProductsBySalesCount() {
+        Pageable pageable = PageRequest.of(0, 5);
+        YearMonth previousMonth = getPreviousMonth();
+        LocalDate startDate = previousMonth.atDay(1);
+        LocalDate endDate = previousMonth.atEndOfMonth();
+
+        Page<TopCountProductProjection> pageResponse = productRepository.findTopSellingProductsBySalesCount(startDate, endDate, pageable);
+
+        assertThat(pageResponse).isNotNull();
+        assertThat(pageResponse.getContent()).hasSizeLessThanOrEqualTo(5);
+        assertProductMatches(pageResponse.getContent().getFirst(), topSellingProductBySalesNumber);
+    }
+
+    private void assertProductMatches(ProductProjection actual, Product expected) {
         assertThat(actual.getName()).isEqualTo(expected.getName());
         assertThat(actual.getDescription()).isEqualTo(expected.getDescription());
     }
 
+    private YearMonth getPreviousMonth() {
+        LocalDate today = LocalDate.now();
+        return YearMonth.from(today.minusMonths(1));
+    }
 
     private Customer createTestCustomer() {
         Customer customer = Customer.builder()
