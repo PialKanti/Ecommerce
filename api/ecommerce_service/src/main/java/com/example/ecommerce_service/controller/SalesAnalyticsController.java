@@ -6,6 +6,7 @@ import com.example.ecommerce_service.dto.response.DailySalesAmountResponse;
 import com.example.ecommerce_service.dto.response.MaxSaleDayResponse;
 import com.example.ecommerce_service.dto.response.PaginatedApiResponse;
 import com.example.ecommerce_service.service.OrderService;
+import com.example.ecommerce_service.validator.QueryParamValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -34,8 +35,10 @@ public class SalesAnalyticsController {
                                                                                     @RequestParam(name = "page", defaultValue = "0", required = false) int page,
                                                                                     @RequestParam(name = "page_size", defaultValue = "5", required = false) int pageSize) {
 
+        QueryParamValidator.validateDateRange(startDate, endDate);
+        QueryParamValidator.validatePageRequest(page, pageSize);
+
         Pageable pageable = PageRequest.of(page, pageSize);
         return ResponseEntity.ok(orderService.findMaxSaleDays(startDate, endDate, pageable));
     }
-
 }
