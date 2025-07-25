@@ -13,7 +13,7 @@ public interface WishlistRepository extends JpaRepository<Wishlist, Long> {
                    product.name,
                    product.description
             from Wishlist wishlist
-            join Product product
+            join wishlist.product product
             where wishlist.customer.id = :customerId
             """)
     Page<WishlistItemProjection> findWishlistItemsByCustomerId(Long customerId, Pageable pageable);
