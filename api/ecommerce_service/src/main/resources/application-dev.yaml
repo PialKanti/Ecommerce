@@ -12,3 +12,7 @@ spring:
     properties:
       hibernate:
         format_sql: true
+
+# Application configuration
+app:
+  currency: BDT

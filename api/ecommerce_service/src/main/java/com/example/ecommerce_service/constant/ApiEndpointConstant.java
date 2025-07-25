@@ -18,4 +18,16 @@ public final class ApiEndpointConstant {
          */
         public static final String WISHLIST = "/{customerId}/wishlist";
     }
+
+    public static final class SalesAnalytics {
+        /**
+         * Base endpoint for sales analytics APIs
+         */
+        public static final String BASE = API_VERSION + "/analytics/sales";
+
+        /**
+         * Endpoint to get total sales amount for today
+         */
+        public static final String TODAY_TOTAL_AMOUNT = "/today/total";
+    }
 }
