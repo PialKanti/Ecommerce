@@ -3,6 +3,7 @@ package com.example.ecommerce_service.controller;
 import com.example.ecommerce_service.constant.ApiEndpointConstant;
 import com.example.ecommerce_service.dto.response.ApiResponse;
 import com.example.ecommerce_service.dto.response.TopAmountProductResponse;
+import com.example.ecommerce_service.dto.response.TopCountProductResponse;
 import com.example.ecommerce_service.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -21,5 +22,10 @@ public class ProductAnalyticsController {
     @GetMapping(ApiEndpointConstant.ProductAnalytics.TOP_SELLING_BY_AMOUNT)
     public ResponseEntity<ApiResponse<List<TopAmountProductResponse>>> findTopSellingByAmount() {
         return ResponseEntity.ok(productService.findTopSellingProductsBySalesAmount());
+    }
+
+    @GetMapping(ApiEndpointConstant.ProductAnalytics.TOP_SELLING_BY_COUNT)
+    public ResponseEntity<ApiResponse<List<TopCountProductResponse>>> findTopSellingByCount() {
+        return ResponseEntity.ok(productService.findTopSellingProductsBySalesCount());
     }
 }
