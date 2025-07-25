@@ -35,4 +35,18 @@ public final class ApiEndpointConstant {
          */
         public static final String MAX_SALE_DAY = "/max-day";
     }
+
+    public static final class ProductAnalytics {
+        public static final String BASE = API_VERSION + "/analytics/products";
+
+        /**
+         * Endpoint to return the top 5 selling items of the last month (based on the number of sales).
+         */
+        public static final String TOP_SELLING_BY_AMOUNT = "/top/amount";
+
+        /**
+         * Endpoint to return the top 5 selling items of the last month (based on the number of sales).
+         */
+        public static final String TOP_SELLING_BY_COUNT = "/top/count";
+    }
 }
