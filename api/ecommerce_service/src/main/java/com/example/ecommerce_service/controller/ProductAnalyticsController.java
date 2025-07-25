@@ -19,12 +19,12 @@ import java.util.List;
 public class ProductAnalyticsController {
     private final ProductService productService;
 
-    @GetMapping(ApiEndpointConstant.ProductAnalytics.TOP_SELLING_BY_AMOUNT)
+    @GetMapping(ApiEndpointConstant.ProductAnalytics.TOP_ALL_TIME_BY_AMOUNT)
     public ResponseEntity<ApiResponse<List<TopAmountProductResponse>>> findTopSellingByAmount() {
         return ResponseEntity.ok(productService.findTopSellingProductsBySalesAmount());
     }
 
-    @GetMapping(ApiEndpointConstant.ProductAnalytics.TOP_SELLING_BY_COUNT)
+    @GetMapping(ApiEndpointConstant.ProductAnalytics.TOP_LAST_MONTH_BY_COUNT)
     public ResponseEntity<ApiResponse<List<TopCountProductResponse>>> findTopSellingByCount() {
         return ResponseEntity.ok(productService.findTopSellingProductsBySalesCount());
     }

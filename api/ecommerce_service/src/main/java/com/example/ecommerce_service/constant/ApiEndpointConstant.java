@@ -42,11 +42,11 @@ public final class ApiEndpointConstant {
         /**
          * Endpoint to return the top 5 selling items of the last month (based on the number of sales).
          */
-        public static final String TOP_SELLING_BY_AMOUNT = "/top/amount";
+        public static final String TOP_ALL_TIME_BY_AMOUNT = "/top/all-time/amount";
 
         /**
          * Endpoint to return the top 5 selling items of the last month (based on the number of sales).
          */
-        public static final String TOP_SELLING_BY_COUNT = "/top/count";
+        public static final String TOP_LAST_MONTH_BY_COUNT = "/top/last-month/count";
     }
 }
