@@ -29,5 +29,10 @@ public final class ApiEndpointConstant {
          * Endpoint to get total sales amount for today
          */
         public static final String TODAY_TOTAL_AMOUNT = "/today/total";
+
+        /**
+         * Endpoint to get max sale day in a time range
+         */
+        public static final String MAX_SALE_DAY = "/max-day";
     }
 }

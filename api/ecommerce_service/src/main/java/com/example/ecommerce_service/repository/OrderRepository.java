@@ -1,14 +1,13 @@
 package com.example.ecommerce_service.repository;
 
 import com.example.ecommerce_service.entity.Order;
-import com.example.ecommerce_service.projection.MaxSalesDayProjection;
+import com.example.ecommerce_service.projection.MaxSaleDayProjection;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import java.sql.Date;
 import java.time.LocalDate;
 
 @Repository
@@ -33,12 +32,12 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
             where daily_sales.daily_total = (
                 select max(max_sales.daily_total)
                 from (
-                    select cast(coalesce(sum(o.total_amount), 0.0) as double) as daily_total
+                    select coalesce(sum(o.total_amount), 0.0) as daily_total
                     from orders o
                     where o.order_date >= :startDate and o.order_date <= :endDate
                     group by o.order_date
                 ) max_sales
             )
             """, nativeQuery = true)
-    Page<MaxSalesDayProjection> findMaxSalesDayByOrderDateRange(LocalDate startDate, LocalDate endDate, Pageable pageable);
+    Page<MaxSaleDayProjection> findMaxSalesDayByOrderDateRange(LocalDate startDate, LocalDate endDate, Pageable pageable);
 }
