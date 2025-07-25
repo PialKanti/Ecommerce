@@ -4,7 +4,7 @@ import com.example.ecommerce_service.entity.Customer;
 import com.example.ecommerce_service.entity.Order;
 import com.example.ecommerce_service.entity.OrderItem;
 import com.example.ecommerce_service.entity.Product;
-import com.example.ecommerce_service.projection.ProductProjection;
+import com.example.ecommerce_service.projection.TopAmountProductProjection;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -60,14 +60,14 @@ public class ProductRepositoryTest {
     void testFindTopSellingProductsBySalesAmount(){
         Pageable pageable = PageRequest.of(0, 5);
 
-        Page<ProductProjection> response = productRepository.findTopSellingProductsBySalesAmount(pageable);
+        Page<TopAmountProductProjection> response = productRepository.findTopSellingProductsBySalesAmount(pageable);
 
         assertThat(response).isNotNull();
         assertThat(response.getContent()).hasSizeLessThanOrEqualTo(5);
         assertProductMatches(response.getContent().getFirst(), topSellingProductBySalesAmount);
     }
 
-    private void assertProductMatches(ProductProjection actual, Product expected) {
+    private void assertProductMatches(TopAmountProductProjection actual, Product expected) {
         assertThat(actual.getName()).isEqualTo(expected.getName());
         assertThat(actual.getDescription()).isEqualTo(expected.getDescription());
     }
@@ -86,6 +86,7 @@ public class ProductRepositoryTest {
         Product product = Product.builder()
                 .name(name)
                 .description(description)
+                .isActive(true)
                 .build();
         return productRepository.save(product);
     }
