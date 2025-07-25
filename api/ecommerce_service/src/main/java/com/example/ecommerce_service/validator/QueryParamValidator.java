@@ -25,7 +25,7 @@ public final class QueryParamValidator {
         }
 
         if (pageSize <= 0) {
-            throw new InvalidQueryParamException(PAGE_SIZE_NEGATIVE.getMessage());
+            throw new InvalidQueryParamException(PAGE_SIZE_INVALID.getMessage());
         }
     }
 }
