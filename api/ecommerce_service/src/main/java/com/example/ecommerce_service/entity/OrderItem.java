@@ -2,10 +2,7 @@ package com.example.ecommerce_service.entity;
 
 import com.example.ecommerce_service.entity.common.BaseEntity;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Entity
 @Table(name = "order_items")
@@ -13,6 +10,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class OrderItem extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = "order_id", nullable = false)
