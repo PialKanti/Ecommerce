@@ -10,7 +10,7 @@ import java.time.LocalDate;
 @Repository
 public interface OrderRepository extends JpaRepository<Order, Long> {
     @Query("""
-             select sum(order.totalAmount)
+             select coalesce(sum(order.totalAmount), 0.0)
              from Order order
              where order.orderDate = :date
             """)
