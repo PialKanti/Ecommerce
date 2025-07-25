@@ -21,26 +21,37 @@ public class OrderRepositoryTest {
     @Autowired
     private CustomerRepository customerRepository;
 
-    private Double expectedDailySalesTotal;
+    private Customer testCustomer;
+    private LocalDate today;
 
     @BeforeEach
     void setupTestData() {
-        Customer customer = createTestCustomer("John", "Doe");
-
-        Double[] testSalesAmount = {100.0, 200.0, 300.50, 400.80, 500.00};
-
-        expectedDailySalesTotal = Arrays.stream(testSalesAmount)
-                .mapToDouble(salesAmount -> {
-                    createTestOrder(LocalDate.now(), salesAmount, customer);
-                    return salesAmount;
-                })
-                .sum();
+        today = LocalDate.now();
+        testCustomer = createTestCustomer("John", "Doe");
     }
 
     @Test
     @DisplayName("Returns total sales for today")
     void testGetTotalSalesAmountByOrderDate() {
-        LocalDate today = LocalDate.now();
+        Double[] testSalesAmount = {100.0, 200.0, 300.50, 400.80, 500.00};
+
+        Double expectedDailySalesTotal = Arrays.stream(testSalesAmount)
+                .mapToDouble(salesAmount -> {
+                    createTestOrder(today, salesAmount, testCustomer);
+                    return salesAmount;
+                })
+                .sum();
+
+        Double actualSalesAmount = orderRepository.getTotalSalesAmountByOrderDate(today);
+
+        assertThat(actualSalesAmount).isNotNull();
+        assertThat(actualSalesAmount).isEqualTo(expectedDailySalesTotal);
+    }
+
+    @Test
+    @DisplayName("Returns zero sales for today when table is empty")
+    void testGetTotalSalesAmountByOrderDate_tableEmpty() {
+        Double expectedDailySalesTotal = 0.0;
 
         Double actualSalesAmount = orderRepository.getTotalSalesAmountByOrderDate(today);
 
