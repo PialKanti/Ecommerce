@@ -2,7 +2,7 @@ package com.example.ecommerce_service.repository;
 
 import com.example.ecommerce_service.entity.Customer;
 import com.example.ecommerce_service.entity.Order;
-import com.example.ecommerce_service.projection.MaxSalesDayProjection;
+import com.example.ecommerce_service.projection.MaxSaleDayProjection;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -11,11 +11,9 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.jdbc.core.JdbcTemplate;
 
 import java.time.LocalDate;
 import java.util.Arrays;
-import java.util.List;
 import java.util.stream.IntStream;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -28,16 +26,13 @@ public class OrderRepositoryTest {
     @Autowired
     private CustomerRepository customerRepository;
 
-    @Autowired
-    private JdbcTemplate jdbcTemplate;
-
     private Customer testCustomer;
     private LocalDate today;
 
     @BeforeEach
     void setupTestData() {
         today = LocalDate.now();
-        testCustomer = createTestCustomer("John", "Doe");
+        testCustomer = createTestCustomer();
     }
 
     @Test
@@ -81,14 +76,10 @@ public class OrderRepositoryTest {
         Double[] salesAmount = {100.0, 200.0, 300.50};
         Pageable pageable = PageRequest.of(0, 5);
 
-        IntStream.range(0, testDates.length).forEach(i -> {
-            Order order = createTestOrder(testDates[i], salesAmount[i], testCustomer);
-        });
+        IntStream.range(0, testDates.length).forEach(i -> createTestOrder(testDates[i], salesAmount[i], testCustomer));
         Double expectedMaxSalesAmount = salesAmount[0] + salesAmount[2];
 
-        List<Order> orders = orderRepository.findAll();
-
-        Page<MaxSalesDayProjection> response = orderRepository.findMaxSalesDayByOrderDateRange(LocalDate.of(2025, 1, 1),
+        Page<MaxSaleDayProjection> response = orderRepository.findMaxSalesDayByOrderDateRange(LocalDate.of(2025, 1, 1),
                 LocalDate.of(2025, 1, 31), pageable);
 
         assertThat(response).isNotNull();
@@ -109,15 +100,13 @@ public class OrderRepositoryTest {
 
         Double[] salesAmounts = {100.0, 200.0, 400.0, 300.0, 100.0};
 
-        IntStream.range(0, testDates.length).forEach(i -> {
-            orderRepository.save(createTestOrder(testDates[i], salesAmounts[i], testCustomer));
-        });
+        IntStream.range(0, testDates.length).forEach(i -> orderRepository.save(createTestOrder(testDates[i], salesAmounts[i], testCustomer)));
 
         Pageable pageable = PageRequest.of(0, 10);
 
         Double expectedMaxSalesAmount = 400.0;
 
-        Page<MaxSalesDayProjection> result = orderRepository.findMaxSalesDayByOrderDateRange(
+        Page<MaxSaleDayProjection> result = orderRepository.findMaxSalesDayByOrderDateRange(
                 LocalDate.of(2025, 1, 1),
                 LocalDate.of(2025, 1, 3),
                 pageable
@@ -138,10 +127,10 @@ public class OrderRepositoryTest {
         return orderRepository.save(order);
     }
 
-    private Customer createTestCustomer(String firstName, String lastName) {
+    private Customer createTestCustomer() {
         Customer customer = Customer.builder()
-                .firstName(firstName)
-                .lastName(lastName)
+                .firstName("John")
+                .lastName("Doe")
                 .isActive(true)
                 .build();
         return customerRepository.save(customer);
