@@ -3,7 +3,7 @@ spring:
     name: ecommerce_service
 
   profiles:
-    active: prod
+    active: dev
 
   # Liquibase Configuration
   liquibase:
