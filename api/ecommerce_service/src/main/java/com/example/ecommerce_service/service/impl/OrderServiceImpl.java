@@ -9,6 +9,7 @@ import com.example.ecommerce_service.projection.MaxSaleDayProjection;
 import com.example.ecommerce_service.repository.OrderRepository;
 import com.example.ecommerce_service.service.OrderService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -20,6 +21,7 @@ import static com.example.ecommerce_service.constant.MessageConstants.MAX_SALE_D
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class OrderServiceImpl implements OrderService {
     private final OrderRepository orderRepository;
     private final ApplicationConfig applicationConfig;
@@ -27,6 +29,7 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public ApiResponse<DailySalesAmountResponse> getDailySalesTotalByOrderDate(LocalDate date) {
         Double dailySalesTotal = orderRepository.getTotalSalesAmountByOrderDate(date);
+        log.info("Today's daily total sales amount is {}. Date = {}", dailySalesTotal, date);
 
         return ApiResponse.success(DAILY_SALES_AMOUNT_FETCH_SUCCESS, DailySalesAmountResponse.builder()
                 .date(date)
@@ -38,6 +41,8 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public PaginatedApiResponse<MaxSaleDayResponse> findMaxSaleDays(LocalDate startDate, LocalDate endDate, Pageable pageable) {
         Page<MaxSaleDayProjection> response = orderRepository.findMaxSalesDayByOrderDateRange(startDate, endDate, pageable);
+
+        log.info("Found {} max sale day(s) between {} and {}", response.getTotalElements(), startDate, endDate);
 
         Page<MaxSaleDayResponse> maxSaleDayResponse = response.map(projection -> MaxSaleDayResponse.builder()
                 .orderDate(projection.getOrderDate())

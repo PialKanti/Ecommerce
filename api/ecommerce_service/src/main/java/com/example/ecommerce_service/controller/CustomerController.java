@@ -13,6 +13,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ProblemDetail;
@@ -22,6 +23,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping(ApiEndpointConstant.Customer.BASE)
 @RequiredArgsConstructor
+@Slf4j
 @Tag(name = "Customer", description = "Operations related to customer information and activities")
 public class CustomerController {
     private final CustomerService customerService;
@@ -48,9 +50,12 @@ public class CustomerController {
                                                                                                  @RequestParam(name = "page", defaultValue = "0", required = false) int page,
                                                                                                  @Parameter(description = "Number of items per page", example = "5")
                                                                                                  @RequestParam(name = "page_size", defaultValue = "5", required = false) int pageSize) {
-        QueryParamValidator.validatePageRequest(page, pageSize);
 
+        log.info("Finding wishlist items by customer ID = {}, Page = {}, Page Size = {}", customerId, page, pageSize);
+
+        QueryParamValidator.validatePageRequest(page, pageSize);
         Pageable pageable = PageRequest.of(page, pageSize);
+
         return ResponseEntity.ok(customerService.findWishlistItemsByCustomerId(customerId, pageable));
     }
 }

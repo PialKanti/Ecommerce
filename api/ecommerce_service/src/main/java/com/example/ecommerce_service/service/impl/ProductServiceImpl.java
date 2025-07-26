@@ -8,6 +8,7 @@ import com.example.ecommerce_service.projection.TopCountProductProjection;
 import com.example.ecommerce_service.repository.ProductRepository;
 import com.example.ecommerce_service.service.ProductService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -21,6 +22,7 @@ import static com.example.ecommerce_service.constant.MessageConstants.*;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class ProductServiceImpl implements ProductService {
     private final ProductRepository productRepository;
 
@@ -29,6 +31,8 @@ public class ProductServiceImpl implements ProductService {
         Pageable pageable = PageRequest.of(0, 5);
 
         Page<TopAmountProductProjection> pageResponse = productRepository.findTopSellingProductsBySalesAmount(pageable);
+
+        log.info("Found {} products for top selling by amount", pageResponse.getTotalElements());
 
         List<TopAmountProductResponse> topSellingProducts = pageResponse.getContent().stream()
                 .map(projection -> TopAmountProductResponse.builder()
@@ -51,6 +55,8 @@ public class ProductServiceImpl implements ProductService {
         LocalDate endDate = previousMonth.atEndOfMonth();
 
         Page<TopCountProductProjection> pageResponse = productRepository.findTopSellingProductsBySalesCount(startDate, endDate, pageable);
+
+        log.info("Found {} products for top selling by count last month", pageResponse.getTotalElements());
 
         List<TopCountProductResponse> topSellingProducts = pageResponse.getContent().stream()
                 .map(projection -> TopCountProductResponse.builder()

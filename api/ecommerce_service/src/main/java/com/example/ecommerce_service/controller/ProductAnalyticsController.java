@@ -11,6 +11,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,6 +22,7 @@ import java.util.List;
 @RestController
 @RequestMapping(ApiEndpointConstant.ProductAnalytics.BASE)
 @RequiredArgsConstructor
+@Slf4j
 @Tag(name = "Product Analytics", description = "Endpoints for analyzing product sales performance")
 public class ProductAnalyticsController {
     private final ProductService productService;
@@ -36,6 +38,7 @@ public class ProductAnalyticsController {
     })
     @GetMapping(ApiEndpointConstant.ProductAnalytics.TOP_ALL_TIME_BY_AMOUNT)
     public ResponseEntity<ApiResponse<List<TopAmountProductResponse>>> findTopSellingByAmount() {
+        log.info("Fetching top 5 selling products of all time by sales amount");
         return ResponseEntity.ok(productService.findTopSellingProductsBySalesAmount());
     }
 
@@ -50,6 +53,7 @@ public class ProductAnalyticsController {
     })
     @GetMapping(ApiEndpointConstant.ProductAnalytics.TOP_LAST_MONTH_BY_COUNT)
     public ResponseEntity<ApiResponse<List<TopCountProductResponse>>> findTopSellingByCount() {
+        log.info("Fetching top 5 selling products of last month by sales count");
         return ResponseEntity.ok(productService.findTopSellingProductsBySalesCount());
     }
 }
