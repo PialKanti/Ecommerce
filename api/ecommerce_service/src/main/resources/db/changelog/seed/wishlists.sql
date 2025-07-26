@@ -1,0 +1,15 @@
+INSERT INTO wishlists (customer_id, product_id) VALUES (1, 2);
+INSERT INTO wishlists (customer_id, product_id) VALUES (1, 4);
+INSERT INTO wishlists (customer_id, product_id) VALUES (1, 7);
+INSERT INTO wishlists (customer_id, product_id) VALUES (2, 1);
+INSERT INTO wishlists (customer_id, product_id) VALUES (2, 3);
+INSERT INTO wishlists (customer_id, product_id) VALUES (2, 5);
+INSERT INTO wishlists (customer_id, product_id) VALUES (3, 6);
+INSERT INTO wishlists (customer_id, product_id) VALUES (3, 8);
+INSERT INTO wishlists (customer_id, product_id) VALUES (3, 9);
+INSERT INTO wishlists (customer_id, product_id) VALUES (3, 10);
+INSERT INTO wishlists (customer_id, product_id) VALUES (1, 1);
+INSERT INTO wishlists (customer_id, product_id) VALUES (2, 2);
+INSERT INTO wishlists (customer_id, product_id) VALUES (3, 4);
+INSERT INTO wishlists (customer_id, product_id) VALUES (1, 5);
+INSERT INTO wishlists (customer_id, product_id) VALUES (2, 6);
