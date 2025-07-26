@@ -13,6 +13,16 @@ services:
     networks:
       - backend_net
 
+  api:
+    container_name: ecommerce_service_api
+    build: ./api/ecommerce_service
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+    networks:
+      - backend_net
+
 networks:
   backend_net:
     driver: bridge

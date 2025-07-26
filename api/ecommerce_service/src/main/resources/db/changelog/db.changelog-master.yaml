@@ -1,0 +1,21 @@
+databaseChangeLog:
+  - include:
+      file: db/changelog/tables/changelog-1-create-customers.yaml
+  - include:
+      file: db/changelog/tables/changelog-2-create-products.yaml
+  - include:
+      file: db/changelog/tables/changelog-3-create-wishlists.yaml
+  - include:
+      file: db/changelog/tables/changelog-4-create-orders.yaml
+  - include:
+      file: db/changelog/tables/changelog-5-create-order-items.yaml
+  - include:
+      file: db/changelog/seed/changelog-1-seed-customers.yaml
+  - include:
+      file: db/changelog/seed/changelog-2-seed-products.yaml
+  - include:
+      file: db/changelog/seed/changelog-3-seed-wishlists.yaml
+  - include:
+      file: db/changelog/seed/changelog-4-seed-orders.yaml
+  - include:
+      file: db/changelog/seed/changelog-5-seed-orderItems.yaml

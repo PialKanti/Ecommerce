@@ -3,5 +3,8 @@ spring:
     name: ecommerce_service
 
   profiles:
-    active: dev
+    active: prod
 
+  # Liquibase Configuration
+  liquibase:
+    change-log: classpath:/db/changelog/db.changelog-master.yaml

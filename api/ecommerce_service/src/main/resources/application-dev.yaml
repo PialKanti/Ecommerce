@@ -5,3 +5,21 @@ spring:
     username: admin
     password: admin@123
     url: jdbc:postgresql://localhost:5432/ecommerce_db?createDatabaseIfNotExist=true
+
+  # JPA related configurations
+  jpa:
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+
+# Logging Configuration
+logging:
+  level:
+    com:
+      example:
+        ecommerce_service: INFO
+
+# Application configuration
+app:
+  currency: BDT

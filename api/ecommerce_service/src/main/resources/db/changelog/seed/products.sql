@@ -1,0 +1,10 @@
+INSERT INTO products (name, description, is_active) VALUES ('T-Shirt', 'Classic cotton t-shirt with round neck', true);
+INSERT INTO products (name, description, is_active) VALUES ('Jeans', 'Slim fit blue denim jeans', true);
+INSERT INTO products (name, description, is_active) VALUES ('Hoodie', 'Warm fleece hoodie with kangaroo pocket', true);
+INSERT INTO products (name, description, is_active) VALUES ('Sneakers', 'Comfortable sneakers suitable for casual wear', true);
+INSERT INTO products (name, description, is_active) VALUES ('Jacket', 'Waterproof windbreaker jacket', true);
+INSERT INTO products (name, description, is_active) VALUES ('Sunglasses', 'Polarized sunglasses with UV protection', true);
+INSERT INTO products (name, description, is_active) VALUES ('Watch', 'Analog wristwatch with leather strap', true);
+INSERT INTO products (name, description, is_active) VALUES ('Wallet', 'Leather bi-fold wallet with multiple card slots', true);
+INSERT INTO products (name, description, is_active) VALUES ('Belt', 'Genuine leather belt with metal buckle', true);
+INSERT INTO products (name, description, is_active) VALUES ('Formal Shoes', 'Elegant black formal shoes for office wear', true);
