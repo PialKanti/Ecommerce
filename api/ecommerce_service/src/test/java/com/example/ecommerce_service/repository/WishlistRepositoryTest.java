@@ -16,7 +16,7 @@ import org.springframework.data.domain.Pageable;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 @DataJpaTest
-public class WishlistRepositoryTest {
+class WishlistRepositoryTest {
     @Autowired
     private CustomerRepository customerRepository;
 

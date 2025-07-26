@@ -22,7 +22,7 @@ import java.time.YearMonth;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest
-public class ProductRepositoryTest {
+class ProductRepositoryTest {
     @Autowired
     private CustomerRepository customerRepository;
 
