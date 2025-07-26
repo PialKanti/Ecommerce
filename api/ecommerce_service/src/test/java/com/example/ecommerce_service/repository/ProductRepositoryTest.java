@@ -7,6 +7,7 @@ import com.example.ecommerce_service.entity.Product;
 import com.example.ecommerce_service.projection.ProductProjection;
 import com.example.ecommerce_service.projection.TopAmountProductProjection;
 import com.example.ecommerce_service.projection.TopCountProductProjection;
+import com.example.ecommerce_service.util.DateTimeUtil;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -49,7 +50,7 @@ class ProductRepositoryTest {
         topSellingProductBySalesAmount = pant;
         topSellingProductBySalesNumber = shirt;
 
-        YearMonth previousMonth = getPreviousMonth();
+        YearMonth previousMonth = DateTimeUtil.getPreviousMonth();
 
         Order shirtOrder = createTestOrder(LocalDate.of(2025, previousMonth.getMonthValue(), 2), 1500.0, testCustomer);
         createTestOrderItem(shirtOrder, shirt, 3, 500.0);
@@ -77,7 +78,7 @@ class ProductRepositoryTest {
     @DisplayName("Returns last month top selling products by sales number")
     void testFindTopSellingProductsBySalesCount() {
         Pageable pageable = PageRequest.of(0, 5);
-        YearMonth previousMonth = getPreviousMonth();
+        YearMonth previousMonth = DateTimeUtil.getPreviousMonth();
         LocalDate startDate = previousMonth.atDay(1);
         LocalDate endDate = previousMonth.atEndOfMonth();
 
@@ -91,11 +92,6 @@ class ProductRepositoryTest {
     private void assertProductMatches(ProductProjection actual, Product expected) {
         assertThat(actual.getName()).isEqualTo(expected.getName());
         assertThat(actual.getDescription()).isEqualTo(expected.getDescription());
-    }
-
-    private YearMonth getPreviousMonth() {
-        LocalDate today = LocalDate.now();
-        return YearMonth.from(today.minusMonths(1));
     }
 
     private Customer createTestCustomer() {

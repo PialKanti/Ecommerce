@@ -7,6 +7,7 @@ import com.example.ecommerce_service.projection.TopAmountProductProjection;
 import com.example.ecommerce_service.projection.TopCountProductProjection;
 import com.example.ecommerce_service.repository.ProductRepository;
 import com.example.ecommerce_service.service.ProductService;
+import com.example.ecommerce_service.util.DateTimeUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -50,7 +51,7 @@ public class ProductServiceImpl implements ProductService {
     public ApiResponse<List<TopCountProductResponse>> findTopSellingProductsBySalesCount() {
         Pageable pageable = PageRequest.of(0, 5);
 
-        YearMonth previousMonth = getPreviousMonth();
+        YearMonth previousMonth = DateTimeUtil.getPreviousMonth();
         LocalDate startDate = previousMonth.atDay(1);
         LocalDate endDate = previousMonth.atEndOfMonth();
 
@@ -68,10 +69,5 @@ public class ProductServiceImpl implements ProductService {
                 .toList();
 
         return ApiResponse.success(LAST_MONTH_TOP_5_PRODUCTS_BY_COUNT_SUCCESS, topSellingProducts);
-    }
-
-    private YearMonth getPreviousMonth() {
-        LocalDate today = LocalDate.now();
-        return YearMonth.from(today.minusMonths(1));
     }
 }
