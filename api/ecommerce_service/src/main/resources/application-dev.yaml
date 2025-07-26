@@ -13,6 +13,13 @@ spring:
       hibernate:
         format_sql: true
 
+# Logging Configuration
+logging:
+  level:
+    com:
+      example:
+        ecommerce_service: INFO
+
 # Application configuration
 app:
   currency: BDT
