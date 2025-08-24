@@ -7,10 +7,9 @@ import com.example.ecommerce_service.entity.Product;
 import com.example.ecommerce_service.projection.ProductProjection;
 import com.example.ecommerce_service.projection.TopAmountProductProjection;
 import com.example.ecommerce_service.projection.TopCountProductProjection;
+import com.example.ecommerce_service.testcontainer.PostgresTestContainer;
 import com.example.ecommerce_service.util.DateTimeUtil;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.data.domain.Page;
@@ -23,7 +22,7 @@ import java.time.YearMonth;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest
-class ProductRepositoryTest {
+class ProductRepositoryTest extends PostgresTestContainer {
     @Autowired
     private CustomerRepository customerRepository;
 
@@ -38,6 +37,16 @@ class ProductRepositoryTest {
 
     private Product topSellingProductBySalesAmount;
     private Product topSellingProductBySalesNumber;
+
+    @BeforeAll
+    static void startTestContainer() {
+        postgres.start();
+    }
+
+    @AfterAll
+    static void stopTestContainer() {
+        postgres.stop();
+    }
 
     @BeforeEach
     void setupTestData() {

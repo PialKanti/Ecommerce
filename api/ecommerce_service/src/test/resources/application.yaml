@@ -1,16 +1,4 @@
 spring:
-  datasource:
-    driver-class-name: org.h2.Driver
-    username: admin
-    password: admin
-    url: jdbc:h2://mem:db;DB_CLOSE_DELAY=-1;MODE=PostgreSQL;
-
-  jpa:
-    hibernate:
-      ddl-auto: create-drop
-    generate-ddl: true
-    show-sql: true
-    database-platform: org.hibernate.dialect.H2Dialect
-
+  # Liquibase Configuration
   liquibase:
-    enabled: false
+    change-log: classpath:/db/changelog/db.changelog-schema.yaml

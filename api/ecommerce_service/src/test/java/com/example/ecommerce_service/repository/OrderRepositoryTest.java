@@ -3,9 +3,8 @@ package com.example.ecommerce_service.repository;
 import com.example.ecommerce_service.entity.Customer;
 import com.example.ecommerce_service.entity.Order;
 import com.example.ecommerce_service.projection.MaxSaleDayProjection;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import com.example.ecommerce_service.testcontainer.PostgresTestContainer;
+import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.data.domain.Page;
@@ -19,7 +18,7 @@ import java.util.stream.IntStream;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest
-class OrderRepositoryTest {
+class OrderRepositoryTest extends PostgresTestContainer {
     @Autowired
     private OrderRepository orderRepository;
 
@@ -28,6 +27,16 @@ class OrderRepositoryTest {
 
     private Customer testCustomer;
     private LocalDate today;
+
+    @BeforeAll
+    static void startTestContainer() {
+        postgres.start();
+    }
+
+    @AfterAll
+    static void stopTestContainer() {
+        postgres.stop();
+    }
 
     @BeforeEach
     void setupTestData() {
