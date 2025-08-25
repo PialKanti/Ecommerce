@@ -58,8 +58,9 @@ class OrderRepositoryTest extends PostgresTestContainer {
 
         Double actualSalesAmount = orderRepository.getTotalSalesAmountByOrderDate(today);
 
-        assertThat(actualSalesAmount).isNotNull();
-        assertThat(actualSalesAmount).isEqualTo(expectedDailySalesTotal);
+        assertThat(actualSalesAmount)
+                .isNotNull()
+                .isEqualTo(expectedDailySalesTotal);
     }
 
     @Test
@@ -69,8 +70,9 @@ class OrderRepositoryTest extends PostgresTestContainer {
 
         Double actualSalesAmount = orderRepository.getTotalSalesAmountByOrderDate(today);
 
-        assertThat(actualSalesAmount).isNotNull();
-        assertThat(actualSalesAmount).isEqualTo(expectedDailySalesTotal);
+        assertThat(actualSalesAmount)
+                .isNotNull()
+                .isEqualTo(expectedDailySalesTotal);
     }
 
 
@@ -92,7 +94,7 @@ class OrderRepositoryTest extends PostgresTestContainer {
                 LocalDate.of(2025, 1, 31), pageable);
 
         assertThat(response).isNotNull();
-        assertThat(response.getContent().size()).isEqualTo(1);
+        assertThat(response.getContent()).hasSize(1);
         assertThat(response.getContent().getFirst().getTotalSalesAmount()).isEqualTo(expectedMaxSalesAmount);
     }
 
@@ -122,7 +124,7 @@ class OrderRepositoryTest extends PostgresTestContainer {
         );
 
         assertThat(result).isNotNull();
-        assertThat(result.getContent().size()).isGreaterThan(1);
+        assertThat(result.getContent()).hasSizeGreaterThan(1);
         assertThat(result.getContent())
                 .allSatisfy(item -> assertThat(item.getTotalSalesAmount()).isEqualTo(expectedMaxSalesAmount));
     }
