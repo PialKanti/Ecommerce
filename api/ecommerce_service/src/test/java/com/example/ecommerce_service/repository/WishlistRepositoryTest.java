@@ -12,7 +12,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest
 class WishlistRepositoryTest extends PostgresTestContainer {
@@ -54,7 +54,7 @@ class WishlistRepositoryTest extends PostgresTestContainer {
         Page<WishlistItemProjection> pageResponse = wishlistRepository.findWishlistItemsByCustomerId(testCustomer.getId(), pageable);
 
         assertThat(pageResponse).isNotNull();
-        assertThat(pageResponse.getContent().size()).isEqualTo(1);
+        assertThat(pageResponse.getContent()).hasSize(1);
 
         WishlistItemProjection item = pageResponse.getContent().getFirst();
         assertThat(item.getName()).isEqualTo("Shirt");
@@ -71,7 +71,7 @@ class WishlistRepositoryTest extends PostgresTestContainer {
                 .findWishlistItemsByCustomerId(anotherCustomer.getId(), pageable);
 
         assertThat(result).isNotNull();
-        assertThat(result.getContent().size()).isEqualTo(0);
+        assertThat(result.getContent()).isEmpty();
     }
 
     private Customer createTestCustomer(String firstName, String lastName) {
